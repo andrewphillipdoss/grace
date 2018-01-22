@@ -1,0 +1,54 @@
+[
+  {
+    "model": "app.person",
+    "pk": 1,
+    "fields": {
+      "type_person": "A",
+      "label": "Pedestrian",
+      "name": "Josh Weinberg",
+      "eligible": true,
+      "unique_time": null,
+      "sandwiches": null,
+      "stop_time": null
+    }
+  },
+  {
+    "model": "app.person",
+    "pk": 2,
+    "fields": {
+      "type_person": "B",
+      "label": "Pedestrian",
+      "name": "Andrew Doss",
+      "eligible": true,
+      "unique_time": null,
+      "sandwiches": 0,
+      "stop_time": null
+    }
+  },
+  {
+    "model": "app.person",
+    "pk": 3,
+    "fields": {
+      "type_person": "C",
+      "label": "Cop",
+      "name": "Meryl Streep",
+      "eligible": false,
+      "unique_time": null,
+      "sandwiches": 0,
+      "stop_time": null
+    }
+  },
+  {
+    "model": "app.person",
+    "pk": 4,
+    "fields": {
+      "type_person": "D",
+      "label": "Robber",
+      "name": "Al Pacino",
+      "eligible": false,
+      "unique_time": null,
+      "sandwiches": null,
+      "stop_time": null
+    }
+  }
+]
