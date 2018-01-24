@@ -1,7 +1,5 @@
-from django.forms import ModelForm
-from app.models import Person
+from django import forms
 
-class TimeForm(ModelForm):
-    class Meta:
-        model = Person
-        fields = ['id','unique_time']
+
+class TimeForm(forms.Form):
+    time = forms.TimeField()

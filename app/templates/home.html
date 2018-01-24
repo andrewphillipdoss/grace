@@ -3,13 +3,13 @@
 
     <script>
       function openModal(button, id) {
-        let modal = document.getElementById('modal');
-        if (button === 'stop') {
-          modal.title = 'modal_stop'+id;
-        } else {
-          modal.title = 'modal_unique'+id;
-        }
-
+        let modal;
+        let input;
+        modal = document.getElementById('modal');
+        input_pk = document.getElementById('input_pk');
+        input_type = document.getElementById('input_type')
+        input_pk.value = id;
+        input_type.value = button
         if (modal.style.display === 'none') {
           modal.style.display = 'block';
         }
@@ -19,6 +19,21 @@
         let modal = document.getElementById('modal');
         modal.style.display = 'none';
       }
+
+      function selectAll() {
+        let selectAll = document.getElementById('checkbox_select_all')
+        let checkboxes = document.getElementsByClassName('checkbox')
+        if (selectAll.checked === true) {
+          for (let i=0; i<checkboxes.length; i++) {
+            checkboxes[i].checked = true;
+          }
+        } else {
+          for (let i=0; i<checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+          }
+        }
+      }
+
     </script>
 
 
@@ -31,7 +46,7 @@
       <thead>
         <tr>
            <th>
-             <input type='checkbox' id='checkbox_select_all'>Select All</input>
+             <input type='checkbox' id='checkbox_select_all' onclick='selectAll()'>Select All</input>
            </th>
            <th>Type</th>
            <th>Label</th>
@@ -47,7 +62,7 @@
         {% if persons %}
           {% for person in persons %}
             <tr>
-              <td><input type='checkbox'></input></td>
+              <td><input type='checkbox' class='checkbox'></input></td>
               <td>{{ person.type_person }}</td>
               <td>{{ person.label }}</td>
               <td>{{ person.name }}</td>
@@ -75,7 +90,9 @@
       <form id='form' action='/' method="POST">
         {{ form }}
         {% csrf_token %}
-        <input type="submit" value="Submit" />
+        <input id='input_pk' type="hidden" value="" name="pk">
+        <input id='input_type' type="hidden" value="" name="type">
+        <input id='input' type="submit" value="Submit"/>
       </form>
     </div>
 
