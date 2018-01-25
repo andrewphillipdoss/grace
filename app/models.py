@@ -16,8 +16,14 @@ class Person(models.Model):
     sandwiches = models.PositiveSmallIntegerField(null=True)
     stop_time = models.TimeField(blank=True, null=True)
 
-    def calculateSandwiches(self):
+    def setUp(self):
         if self.eligible == False:
+            self.unique_time == None
+            self.sandwiches == None
+        self.calculateSandwiches()
+
+    def calculateSandwiches(self):
+        if self.eligible == False or self.stop_time == None:
             self.sandwiches = None
         else:
             unique = self.unique_time.hour*60*60*1000 + self.unique_time.minute*60*1000 + self.unique_time.second*1000 + self.unique_time.microsecond*1000

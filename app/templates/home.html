@@ -1,102 +1,88 @@
 <html>
   <head>
+    {% load static %}
 
-    <script>
-      function openModal(button, id) {
-        let modal;
-        let input;
-        modal = document.getElementById('modal');
-        input_pk = document.getElementById('input_pk');
-        input_type = document.getElementById('input_type')
-        input_pk.value = id;
-        input_type.value = button
-        if (modal.style.display === 'none') {
-          modal.style.display = 'block';
-        }
-      }
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-      function closeModal() {
-        let modal = document.getElementById('modal');
-        modal.style.display = 'none';
-      }
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/tablefilter.js' %}"></script>
+    <script src="{% static 'js/actb.js' %}"></script>
 
-      function selectAll() {
-        let selectAll = document.getElementById('checkbox_select_all')
-        let checkboxes = document.getElementsByClassName('checkbox')
-        if (selectAll.checked === true) {
-          for (let i=0; i<checkboxes.length; i++) {
-            checkboxes[i].checked = true;
-          }
-        } else {
-          for (let i=0; i<checkboxes.length; i++) {
-            checkboxes[i].checked = false;
-          }
-        }
-      }
-
-    </script>
-
-
-    <title>GRACE</title>
+    <title>GRACE<</title>
   </head>
 
   <body>
-    <h1>GRACE</h1>
-    <table>
+    <!-- Page Header -->
+    <h1><center>GRACE</center></h1>
+
+    <!-- Table that holds data -->
+    <table class='table' id='table1'>
       <thead>
         <tr>
            <th>
-             <input type='checkbox' id='checkbox_select_all' onclick='selectAll()'>Select All</input>
+             <input type='checkbox' id='checkbox_select_all' onclick='selectAll()'></input>
            </th>
-           <th>Type</th>
-           <th>Label</th>
-           <th>Name</th>
-           <th>Unique</th>
+           <th>Type  </th>
+           <th>Label </th>
+           <th>Name   </th>
+           <th>Unique </th>
            <th></th>
-           <th>Sandwiches</th>
-           <th>Stop Time</th>
-           <th></th>
+           <th>Sandwiches </th>
+           <th>Stop Time  </th>
+           <th><button class='btn btn-secondary' onclick='showFilter()'></button></th>
         </tr>
       </thead>
       <tbody>
         {% if persons %}
           {% for person in persons %}
             <tr>
-              <td><input type='checkbox' class='checkbox'></input></td>
-              <td>{{ person.type_person }}</td>
-              <td>{{ person.label }}</td>
-              <td>{{ person.name }}</td>
-              <td>{{ person.unique_time }}</td>
+              <td> <input type='checkbox' class='checkbox'></input></td>
+              <td class='row_type_person_{{ person.type_person }}'>{{ person.type_person }}</td>
+              <td class='row_label_{{ person.label }}'>{{ person.label }}</td>
+              <td class='row_name_{{ person.name }}'>{{ person.name }}</td>
+              <td class='row_unique_time_{{ person.unique_time }}'>{{ person.unique_time }}</td>
               <td>
                 {% if person.eligible %}
-                  <button class='button_unique' id='button_unique{{person.id}}' onclick="openModal('unique',{{person.id}})"></button>
+                  <button class='btn btn-success' id='button_unique{{person.id}}' onclick="openModal('unique',{{person.id}})"></button>
                 {% endif %}
               </td>
-              <td>{{ person.sandwiches }}</td>
-              <td>{{ person.stop_time }}</td>
-              <td><button class='button_stop' id='button_stop{{person.id}}' onclick="openModal('stop',{{person.id}})"></button>
+              <td class='row_sandwiches_{{ person.sandwiches }}'>{{ person.sandwiches }}</td>
+              <td class='row_stop_time_{{ person.stop_time }}'>{{ person.stop_time }}</td>
+              <td><button class='btn btn-primary' id='button_stop{{person.id}}' onclick="openModal('stop',{{person.id}})"></button>
             </tr>
           {% endfor %}
       </tbody>
       </table>
+      <a id="download_button" class="btn btn-primary" role="button" href = "{% url 'download' %}">Download CSV</a>
 
         {% else %}
 
-      <h1>There are no records in the system></h1>
+      <h1><center>There are no records in the system></center></h1>
     {% endif %}
 
-    <div id='modal' style='display: none'>
-      <button onclick='closeModal()'></button>
-      <form id='form' action='/' method="POST">
-        {{ form }}
-        {% csrf_token %}
-        <input id='input_pk' type="hidden" value="" name="pk">
-        <input id='input_type' type="hidden" value="" name="type">
-        <input id='input' type="submit" value="Submit"/>
-      </form>
+    <!-- Modal for editing Time -->
+    <div id='time_edit_modal' class='modal' role="dialog" style='display: none'>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="time_edit_modal_title" class="modal-title">Enter Time</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id='form' action='/' method="POST">
+              {{ form }}
+              {% csrf_token %}
+              <input id='input_pk' type="hidden" value="" name="pk">
+              <input id='input_type' type="hidden" value="" name="type">
+              <input id='input' type="submit" value="Submit"/>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-
-
 
   </body>
 </html>

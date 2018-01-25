@@ -15,6 +15,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+STATIC_URL = '/static/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -30,8 +31,8 @@ ALLOWED_HOSTS = []
 TIME_INPUT_FORMATS = [
                       '%H:%M:%S',        # '14:30:59'
                       '%H:%M',           # '14:30'
-                      '%H:%M:%S %p',     # '2:30:59 PM'
-                      '%H:%M %p'         # '14:30 PM'
+                      '%I:%M:%S %p',     # '2:30:59 PM'
+                      '%I:%M %p'         # '2:30 PM'
                       ]
 
 # Application definition
@@ -107,3 +108,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
