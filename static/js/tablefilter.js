@@ -22,8 +22,6 @@ function setFilterGrid(id)
 	- Calls fn that generates the grid
 =====================================================*/
 {
-
-	alert('script came thru, boi');
 	var tbl = grabEBI(id);
 	var ref_row, fObj;
 	if(tbl != null && tbl.nodeName.toLowerCase() == "table")
