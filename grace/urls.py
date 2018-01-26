@@ -23,3 +23,8 @@ urlpatterns = [
     url(r'^$', MainPageView.as_view()),
     url(r'^download/', views.download_csv_data, name='download')
 ]
+
+from grace import settings
+urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+    )
