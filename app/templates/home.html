@@ -1,11 +1,13 @@
 <html>
   <head>
+    {% load staticfiles %}
+
     <link rel="stylesheet" href="../app/static/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <script src="../app/static/js/script.js"></script>
-    <script src="../app/static/js/tablefilter.js"></script>
-    <script src="../app/static/js/actb.js"></script>
+    <script src="{% static 'js/script.js' }"></script>
+    <script src="{% static 'js/tablefilter.js' }"></script>
+    <script src="{% static 'js/actb.js' }"></script>
 
     <title>GRACE<</title>
   </head>
