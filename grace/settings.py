@@ -26,7 +26,7 @@ SECRET_KEY = '029e1ilx6+)jxpfwd7viedszq)y1nna3!z!fs96^0i)53dt^@%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['andrewphillipdoss.pythonanywhere.com']
 
 TIME_INPUT_FORMATS = [
                       '%H:%M:%S',        # '14:30:59'
@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        }
 }
 
 
