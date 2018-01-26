@@ -25,9 +25,9 @@ STATIC_URL = '/static/'
 SECRET_KEY = '029e1ilx6+)jxpfwd7viedszq)y1nna3!z!fs96^0i)53dt^@%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['andrewphillipdoss.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 TIME_INPUT_FORMATS = [
                       '%H:%M:%S',        # '14:30:59'
