@@ -22,6 +22,9 @@ class Person(models.Model):
             self.sandwiches == None
         self.calculateSandwiches()
 
+    def resetStop(self):
+        self.stop_time = None
+
     def calculateSandwiches(self):
         if self.eligible == False or self.stop_time == None:
             self.sandwiches = None

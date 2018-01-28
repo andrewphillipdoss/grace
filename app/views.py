@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
+from django.contrib import messages
 from app.models import *
 from django.utils.encoding import smart_str
 import csv
@@ -20,7 +21,7 @@ class MainPageView(TemplateView):
         form = self.form()
         for person in persons:
             Person.setUp(person)
-        return render(request, self.template_name, {'persons': persons, 'persons_filter': persons_filter, 'form': form})
+        return render(request, self.template_name, {'persons': persons, 'form': form})
 
     def post(self, request):
         body = request.body
@@ -31,11 +32,12 @@ class MainPageView(TemplateView):
         if form.is_valid():
             if input_type == 'unique':
                 person.unique_time = form.cleaned_data['time']
+                Person.resetStop(person)
             else:
                 person.stop_time = form.cleaned_data['time']
             Person.calculateSandwiches(person)
-            person.save()
         return render(request, self.template_name, {'persons': persons, 'form': form})
+
 
 # generate and download csv file
 def download_csv_data(request):
