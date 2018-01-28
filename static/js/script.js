@@ -30,8 +30,8 @@
     }
   }
 
-  function closeModal() {
-    let modal = document.getElementById('time_edit_modal');
+  function closeModal(element) {
+    let modal = document.getElementById(element);
     modal.style.display = 'none';
   }
 
