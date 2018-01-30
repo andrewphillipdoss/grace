@@ -1,5 +1,7 @@
 from django.db import models
+from django.utils import timezone
 import datetime
+from datetime import timedelta
 import math
 
 # Create your models here.
@@ -26,15 +28,14 @@ class Person(models.Model):
         self.stop_time = None
 
     def calculateSandwiches(self):
-        if self.eligible == False or self.stop_time == None:
-            self.sandwiches = None
-        else:
-            unique = self.unique_time.hour*60*60*1000 + self.unique_time.minute*60*1000 + self.unique_time.second*1000 + self.unique_time.microsecond*1000
-            stop = self.stop_time.hour*60*60*1000 + self.stop_time.minute*60*1000 + self.stop_time.second*1000 + self.stop_time.microsecond*1000
-            milli_diff = (stop - unique)
-            sandwich_num = max(0, (milli_diff - ((60*6 + 12)*60*1000))/(1000*60*30))
-            self.sandwiches = math.ceil(sandwich_num)
-
+        self.sandwiches = None
+        if self.eligible == True and self.stop_time == None and self.unique_time != None:
+            now = datetime.datetime.time(datetime.datetime.now())
+            unique_milli = 1000.0 * ((self.unique_time.hour)*60*60 + (self.unique_time.minute)*60 + self.unique_time.second)
+            now_milli = 1000.0 * (now.hour*60*60 + now.minute*60 + now.second + now.microsecond/(1e6))
+            interval_milli = 21600000 + 720000 #6 hours and 12 minutes in milliseconds
+            sand_num = (now_milli - unique_milli - interval_milli) / (1000.0*60*30)
+            self.sandwiches = max(0, math.ceil(sand_num))
 
     def __unicode__(self):
         return self.establishment

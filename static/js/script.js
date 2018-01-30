@@ -19,12 +19,32 @@
      }
    }
 
-  function openModal(button, id) {
+  function openModal(button, id, select) {
+    let selected_elements = document.getElementsByClassName('checkbox');
+    let selected = [].slice.call(selected_elements);
     let modal = document.getElementById('time_edit_modal');
+    let form = document.getElementById('form');
     let input_pk = document.getElementById('input_pk');
-    let input_type = document.getElementById('input_type')
-    input_pk.value = id;
-    input_type.value = button;
+    let input_type = document.getElementById('input_type');
+
+
+    if (select === true) {
+      input_type.value = button+'_select'
+      for (let i = 0; i < selected.length; i++) {
+        if (selected[i].checked === true) {
+          input_pk.value = i+1;
+          new_input_pk = document.createElement('input');
+          new_input_pk.value = i;
+          new_input_pk.type = "hidden";
+          new_input_pk.name = i;
+          new_input_pk.class = "auto_generated";
+          form.appendChild(new_input_pk);
+        }
+      }
+    } else {
+      input_pk.value = id;
+      input_type.value = button;
+    }
     if (modal.style.display === 'none') {
       modal.style.display = 'block';
     }

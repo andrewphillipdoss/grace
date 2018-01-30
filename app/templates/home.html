@@ -2,6 +2,10 @@
   <head>
     {% load static %}
 
+    <!-- <script src='../../static/js/script.js'></script>
+    <script src='../../static/js/tablefilter.js'></script>
+    <script src='../../static/js/actb.js'></script> -->
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -28,6 +32,10 @@
     <table class='table' id='table1'>
       <thead>
         <tr>
+          <td colspan='8'></td>
+          <th><button class='btn btn-secondary' onclick='showFilter()'></button></th>
+        </tr>
+        <tr>
            <th>
              <input type='checkbox' id='checkbox_select_all' onclick='selectAll()'></input>
            </th>
@@ -35,29 +43,29 @@
            <th>Label </th>
            <th>Name   </th>
            <th>Unique </th>
-           <th></th>
+           <th><button class='btn btn-success' id='button_unique{{person.id}}' onclick="openModal('unique', 1,true)"></button></th>
            <th>Sandwiches </th>
            <th>Stop Time  </th>
-           <th><button class='btn btn-secondary' onclick='showFilter()'></button></th>
+           <th><button class='btn btn-primary' id='button_stop{{person.id}}' onclick="openModal('stop', 1,true)"></button></th>
         </tr>
       </thead>
       <tbody>
         {% if persons %}
           {% for person in persons %}
             <tr>
-              <td> <input type='checkbox' class='checkbox'></input></td>
+              <td><input type='checkbox' class='checkbox' id='checkbox_{{ person.id }}'></input></td>
               <td class='row_type_person_{{ person.type_person }}'>{{ person.type_person }}</td>
               <td class='row_label_{{ person.label }}'>{{ person.label }}</td>
               <td class='row_name_{{ person.name }}'>{{ person.name }}</td>
-              <td class='row_unique_time_{{ person.unique_time }}'>{{ person.unique_time }}</td>
+              <td class='row_unique_time_{{ person.unique_time }}'>{{ person.unique_time|default_if_none:"-" }}</td>
               <td>
                 {% if person.eligible %}
-                  <button class='btn btn-success' id='button_unique{{person.id}}' onclick="openModal('unique',{{person.id}})"></button>
+                  <button class='btn btn-success' id='button_unique{{person.id}}' onclick="openModal('unique',{{person.id}}, false)"></button>
                 {% endif %}
               </td>
-              <td class='row_sandwiches_{{ person.sandwiches }}'>{{ person.sandwiches }}</td>
-              <td class='row_stop_time_{{ person.stop_time }}'>{{ person.stop_time }}</td>
-              <td><button class='btn btn-primary' id='button_stop{{person.id}}' onclick="openModal('stop',{{person.id}})"></button>
+              <td class='row_sandwiches_{{ person.sandwiches }}'>{{ person.sandwiches|default_if_none:"-" }}</td>
+              <td class='row_stop_time_{{ person.stop_time }}'>{{ person.stop_time|default_if_none:"-" }}</td>
+              <td><button class='btn btn-primary' id='button_stop{{person.id}}' onclick="openModal('stop',{{person.id}}, false)"></button>
             </tr>
           {% endfor %}
       </tbody>
@@ -85,7 +93,7 @@
               {% csrf_token %}
               <input id='input_pk' type="hidden" value="" name="pk">
               <input id='input_type' type="hidden" value="" name="type">
-              <input id='input' type="submit" value="Submit"/>
+              <input class='form-control' id='input' type="submit" value="Submit"/>
             </form>
           </div>
         </div>

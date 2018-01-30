@@ -8,36 +8,59 @@ import csv
 
 from .forms import TimeForm
 
+# use this line to debug:
+# import pdb; pdb.set_trace()
+
 class MainPageView(TemplateView):
     template_name = "home.html"
     template2 = "test.html"
     form = TimeForm
     persons = Person.objects.all()
-    persons_filter = Person.objects.all().distinct()
 
     def get(self, request, *args, **kwargs):
         persons = self.persons
-        persons_filter = self.persons_filter
         form = self.form()
         for person in persons:
             Person.setUp(person)
         return render(request, self.template_name, {'persons': persons, 'form': form})
 
+
     def post(self, request):
         body = request.body
         persons = self.persons
-        person = persons[int(request.POST['pk'])-1]
+
+        #Create array for which persons have been selected
+        persons_selected = []
+        for i in range(0, persons.count()):
+            if request.POST.get(str(i)) is not None:
+                persons_selected.append(persons[int(request.POST[str(i)])])
+        print(persons_selected)
+
         input_type = request.POST['type']
         form = self.form(request.POST)
         if form.is_valid():
-            if input_type == 'unique':
+            if input_type == 'unique_select':
+                for person_selected in persons_selected:
+                    if person_selected.eligible:
+                        person_selected.unique_time = form.cleaned_data['time']
+                        Person.resetStop(person_selected)
+                        Person.calculateSandwiches(person_selected)
+            elif input_type == 'stop_select':
+                for person_selected in persons_selected:
+                    person_selected.stop_time = form.cleaned_data['time']
+                    Person.calculateSandwiches(person_selected)
+            elif input_type == 'unique':
+                person = persons[int(request.POST['pk'])-1]
                 person.unique_time = form.cleaned_data['time']
                 Person.resetStop(person)
-            else:
+                Person.calculateSandwiches(person)
+            elif input_type == 'stop':
+                person = persons[int(request.POST['pk'])-1]
                 person.stop_time = form.cleaned_data['time']
-            Person.calculateSandwiches(person)
+                Person.calculateSandwiches(person)
+            else:
+                pass
         return render(request, self.template_name, {'persons': persons, 'form': form})
-
 
 # generate and download csv file
 def download_csv_data(request):

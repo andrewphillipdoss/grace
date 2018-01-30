@@ -18,11 +18,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../static')
+    os.path.join(BASE_DIR, '../static'),
 )
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
-)
+#TEMPLATE_DIRS = (
+#    os.path.join(BASE_DIR, 'templates'),
+#)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Quick-start development settings - unsuitable for production
@@ -104,7 +104,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Central'
 
 USE_I18N = True
 
