@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
+import django.dispatch
 import datetime
-from datetime import timedelta
 import math
 
 # Create your models here.
@@ -34,8 +34,8 @@ class Person(models.Model):
             unique_milli = 1000.0 * ((self.unique_time.hour)*60*60 + (self.unique_time.minute)*60 + self.unique_time.second)
             now_milli = 1000.0 * (now.hour*60*60 + now.minute*60 + now.second + now.microsecond/(1e6))
             interval_milli = 21600000 + 720000 #6 hours and 12 minutes in milliseconds
-            sand_num = (now_milli - unique_milli - interval_milli) / (1000.0*60*30)
-            self.sandwiches = max(0, math.ceil(sand_num))
+            sand_num = max(0, math.ceil((now_milli - unique_milli - interval_milli) / (1000.0*60*30)))
+            self.sandwiches = sand_num
 
     def __unicode__(self):
         return self.establishment

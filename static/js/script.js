@@ -37,7 +37,7 @@
           new_input_pk.value = i;
           new_input_pk.type = "hidden";
           new_input_pk.name = i;
-          new_input_pk.class = "auto_generated";
+          new_input_pk.className = "auto_generated";
           form.appendChild(new_input_pk);
         }
       }
@@ -52,6 +52,11 @@
 
   function closeModal(element) {
     let modal = document.getElementById(element);
+    let form = document.getElementById('form');
+    let new_inputs = document.getElementsByClassName('auto_generated');
+    while(new_inputs.length > 0) {
+      form.removeChild(new_inputs[0]);
+    }
     modal.style.display = 'none';
   }
 

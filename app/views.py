@@ -61,7 +61,7 @@ class MainPageView(TemplateView):
             else:
                 pass
         return render(request, self.template_name, {'persons': persons, 'form': form})
-
+        
 # generate and download csv file
 def download_csv_data(request):
     response = HttpResponse(content_type='text/csv')
