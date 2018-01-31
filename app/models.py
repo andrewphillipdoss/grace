@@ -28,7 +28,8 @@ class Person(models.Model):
         self.stop_time = None
 
     def calculateSandwiches(self):
-        self.sandwiches = None
+        if self.unique_time == None:
+            self.sandwiches = None
         if self.eligible == True and self.stop_time == None and self.unique_time != None:
             now = datetime.datetime.time(datetime.datetime.now())
             unique_milli = 1000.0 * ((self.unique_time.hour)*60*60 + (self.unique_time.minute)*60 + self.unique_time.second)
