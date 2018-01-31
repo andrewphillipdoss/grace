@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.contrib import messages
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from app.models import *
 from django.utils.encoding import smart_str
 import csv
@@ -61,7 +63,7 @@ class MainPageView(TemplateView):
             else:
                 pass
         return render(request, self.template_name, {'persons': persons, 'form': form})
-        
+
 # generate and download csv file
 def download_csv_data(request):
     response = HttpResponse(content_type='text/csv')
@@ -90,3 +92,10 @@ def download_csv_data(request):
             smart_str(person.stop_time)
         ])
     return response
+
+# listen for when the sandwiches change
+@receiver(pre_save, sender=Person)
+def refreshPage(sender, instance, **kwargs):
+    old_instance = Person.objects.get(pk=instance.pk)
+    if old_instance.sandwiches != instance.sandwiches:
+        MainPageView.get

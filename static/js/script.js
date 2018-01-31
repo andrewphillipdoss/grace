@@ -26,8 +26,7 @@
     let form = document.getElementById('form');
     let input_pk = document.getElementById('input_pk');
     let input_type = document.getElementById('input_type');
-
-
+    
     if (select === true) {
       input_type.value = button+'_select'
       for (let i = 0; i < selected.length; i++) {
