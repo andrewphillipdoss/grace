@@ -10,12 +10,13 @@
     col_8: "none"
    }
 
+   // from tablefilter.js
    function showFilter() {
      if (TF_HasGrid("table1")) {
        TF_RemoveFilterGrid("table1");
      }
      else {
-       setFilterGrid("table1",0,tableFilters)
+       setFilterGrid("table1", 0, tableFilters)
      }
    }
 
@@ -26,7 +27,7 @@
     let form = document.getElementById('form');
     let input_pk = document.getElementById('input_pk');
     let input_type = document.getElementById('input_type');
-    
+
     if (select === true) {
       input_type.value = button+'_select'
       for (let i = 0; i < selected.length; i++) {
